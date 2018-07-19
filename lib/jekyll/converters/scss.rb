@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "sass"
+require "sassc"
 require "jekyll/utils"
 
 module Jekyll
@@ -116,10 +116,10 @@ module Jekyll
       end
 
       def convert(content)
-        output = ::Sass.compile(content, sass_configs)
+        output = SassC::Engine.new(content.dup, sass_configs).render
         replacement = add_charset? ? '@charset "UTF-8";' : ""
         output.sub(BYTE_ORDER_MARK, replacement)
-      rescue ::Sass::SyntaxError => e
+      rescue SassC::SyntaxError => e
         raise SyntaxError, "#{e} on line #{e.sass_line}"
       end
 
