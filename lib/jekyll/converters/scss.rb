@@ -120,7 +120,7 @@ module Jekyll
         replacement = add_charset? ? '@charset "UTF-8";' : ""
         output.sub(BYTE_ORDER_MARK, replacement)
       rescue SassC::SyntaxError => e
-        raise SyntaxError, "#{e} on line #{e.sass_line}"
+        raise SyntaxError, e
       end
 
       private
